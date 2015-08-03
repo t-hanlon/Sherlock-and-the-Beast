@@ -1,0 +1,63 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+string Solve_Case(int N) {
+    int num_fives;
+    int num_threes;
+    int unused;
+    string result;
+    
+    unused = (N % 3);
+    num_fives = N - unused;
+    num_threes = 0;
+    
+    while (num_fives > 0 && (num_fives + num_threes != N)) {
+        num_fives -= 3;
+        unused += 3;
+        if (unused >= 5) {
+            unused -= 5;
+            num_threes += 5;
+        }
+    }
+    
+    //There is no solution.
+    if (num_fives + num_threes != N) {
+        return "-1";
+    }
+    for (int i = 0; i < num_fives; i++) {
+        result += "5";
+    }
+    for (int i = 0; i < num_threes; i++) {
+        result += "3";
+    }
+    
+    return result;
+}
+
+/**
+  * Takes input in the format:
+  * T - Number of test cases to follow (meaning number of 'N' values)
+  * N_1 - The total number of digits, both 3's and 5's
+  * N_2 - The second test case
+  * ...
+  * N_T
+  */
+int main() {
+    int T;
+    int N;
+    int case_no;
+    
+    cin >> T;
+    case_no = 0;
+    
+    while (case_no < T) {
+        cin >> N;
+        cout << Solve_Case(N) << endl;
+        case_no++;
+    }
+    return 0;
+}
